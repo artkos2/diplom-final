@@ -1,0 +1,16 @@
+celery
+Django
+django-allauth
+django-cuser
+django-filter
+django-modeltranslation
+django-property-filter
+django-rest-passwordreset
+django-tinymce
+djangorestframework
+psycopg2-binary
+requests
+virtualenv
+virtualenv-clone
+ujson
+PyYAML
