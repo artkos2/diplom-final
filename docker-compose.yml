@@ -11,6 +11,13 @@ services:
       - ./.env
     depends_on:
       - db
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    depends_on:
+      - db
+      - web
   db:
     image: postgres:12.0-alpine
     volumes:

@@ -1,0 +1,221 @@
+
+@URL = http://127.0.0.1:8000/api/v1/
+
+###
+POST {{URL}}user/register
+Content-Type: application/json
+
+{
+        "first_name": "Koss",
+        "last_name": "Art",
+        "email": "bahdaji@yandex.ru",
+        "password": "boss123123",
+        "company": "qwerty",
+        "position": "boss"
+    }
+
+###
+POST {{URL}}user/register/confirm
+Content-Type: application/json
+
+{
+  "email":"bahdaji2@yandex.ru",
+  "token":"ec1859e2468ca6c73e"
+}
+
+###
+POST {{URL}}user/login
+Content-Type: application/json
+
+{
+  "email":"bahdaji2@yandex.ru",
+  "password":"boss123123"
+}
+
+###
+POST {{URL}}user/password_reset
+Content-Type: application/json
+
+{
+  "email":"bahdaji@yandex.ru"
+}
+
+###
+POST {{URL}}user/password_reset/confirm
+Content-Type: application/json
+
+{
+  "email":"bahdaji@yandex.ru",
+  "password": "boss123123",
+  "token":"ec1859e2468ca6c73e"
+}
+
+###
+
+GET {{URL}}user/details
+Content-Type: application/json
+Authorization: Token dfdbe95ffb540cbdfc5924debaf505ee8a941db3
+
+
+
+###
+POST {{URL}}user/details
+Content-Type: application/json
+Authorization: Token dfdbe95ffb540cbdfc5924debaf505ee8a941db3
+
+{
+        "first_name": "Koss",
+        "last_name": "Art",
+        "email": "bahdaji@gmail.com",
+        "password": "boss123123",
+        "company": "qwerty",
+        "position": "boss"
+    }
+
+
+###
+GET {{URL}}categories
+
+
+###
+GET {{URL}}shops
+
+
+###
+GET {{URL}}products?shop_id=1&category_id=224
+
+###
+GET {{URL}}products
+
+###
+GET {{URL}}user/contact
+Authorization: Token dfdbe95ffb540cbdfc5924debaf505ee8a941db3
+
+###
+POST {{URL}}user/contact
+Authorization: Token dfdbe95ffb540cbdfc5924debaf505ee8a941db3
+Content-Type: application/json
+
+{
+                "city": "Moscow",
+                "street": "pokrovka",
+                "house": "1",
+                "structure": "2",
+                "building": "0",
+                "apartment": "0",
+                "phone": "90999499434"
+                }
+
+###
+PUT {{URL}}user/contact
+Authorization: Token dfdbe95ffb540cbdfc5924debaf505ee8a941db3
+Content-Type: application/json
+
+{
+                "city": "Moscow",
+                "street": "pokrovka street",
+                "house": "1",
+                "structure": "2",
+                "building": "0",
+                "apartment": "0",
+                "phone": "90999499434",
+                "id": 1
+                }
+
+###
+DELETE {{URL}}user/contact
+Authorization: Token dfdbe95ffb540cbdfc5924debaf505ee8a941db3
+Content-Type: application/json
+
+{
+  "items" : "1"
+}
+
+###
+GET {{URL}}basket
+Authorization: Token dfdbe95ffb540cbdfc5924debaf505ee8a941db3
+Content-Type:application/json
+
+###
+POST {{URL}}basket
+Authorization: Token dfdbe95ffb540cbdfc5924debaf505ee8a941db3
+Content-Type:application/json
+
+ {
+   "items":
+   [
+     {"product_info": 4,
+     "quantity": 1}
+   ]
+   }
+###
+PUT {{URL}}basket
+Authorization: Token dfdbe95ffb540cbdfc5924debaf505ee8a941db3
+Content-Type:application/json
+
+ {
+   "items":
+   [
+     {"id": 4,
+     "quantity": 2}
+   ]
+   }
+
+###
+DELETE {{URL}}basket
+Authorization: Token dfdbe95ffb540cbdfc5924debaf505ee8a941db3
+Content-Type:application/json
+
+ {
+   "items": "2"
+
+   }
+
+###
+GET {{URL}}partner/state
+Authorization: Token 2ad650a35cb51e26cb443178c4d03f3fee18978b
+Content-Type:application/json
+
+###
+POST {{URL}}partner/state
+Authorization: Token 2ad650a35cb51e26cb443178c4d03f3fee18978b
+Content-Type:application/json
+
+{
+  "state":"on"
+}
+
+###
+POST {{URL}}partner/update
+Authorization: Token 2ad650a35cb51e26cb443178c4d03f3fee18978b
+Content-Type:application/json
+
+{
+  "url":
+  "https://raw.githubusercontent.com/netology-code/pd-diplom/master/data/shop1.yaml"
+}
+
+
+
+###
+GET {{URL}}order
+Authorization: Token dfdbe95ffb540cbdfc5924debaf505ee8a941db3
+Content-Type:application/json
+
+
+###
+POST {{URL}}order
+Authorization: Token dfdbe95ffb540cbdfc5924debaf505ee8a941db3
+Content-Type:application/json
+
+{
+  "id":"1",
+  "contact" : "2"
+}
+
+
+###
+GET {{URL}}partner/orders
+Authorization: Token 2ad650a35cb51e26cb443178c4d03f3fee18978b
+Content-Type:application/json
+

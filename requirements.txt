@@ -14,3 +14,4 @@ virtualenv
 virtualenv-clone
 ujson
 PyYAML
+Redis
