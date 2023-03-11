@@ -93,7 +93,7 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = "Users list"
-        ordering = ('Email',)
+        ordering = ('email',)
 
 
 class Shop(models.Model):
