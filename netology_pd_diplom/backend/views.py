@@ -1,10 +1,8 @@
 import json
-import requests
 from distutils.util import strtobool
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.validators import URLValidator
 from django.db import IntegrityError
 from django.db.models import Q, Sum, F
 from django.http import JsonResponse
@@ -16,15 +14,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from ujson import loads as load_json
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import action
 from .models import Shop, Category, ProductInfo, Order, OrderItem, Contact, ConfirmEmailToken
 from .serializers import UserSerializer, CategorySerializer, ShopSerializer, ProductInfoSerializer, \
     OrderItemSerializer, OrderSerializer, ContactSerializer
 from .signals import send_email, get_import
-from django.core.validators import URLValidator
-from django.core.exceptions import ValidationError
-from .models import Shop, Category, Product, Parameter, ProductParameter, ProductInfo
-from yaml import load as load_yaml, Loader
 
 
 class RegisterUser(APIView):
@@ -50,9 +43,9 @@ class RegisterUser(APIView):
                     user.set_password(request.data['password'])
                     user.save()
                     token, _ = ConfirmEmailToken.objects.get_or_create(user_id=user.id)
-                    send_email.delay('Confirmation of registration', f'Your confirmation token {token.key}',
+                    send_email.delay('Подтверждение регистрации', f'Ваш токен для подтверждения {token.key}',
                                      user.email)
-                    return JsonResponse({'Status': True, 'Token for email confirmation': token.key},
+                    return JsonResponse({'Status': True, 'Ваш токен для подтверждения': token.key},
                                     status=status.HTTP_201_CREATED)
                 else:
                     return JsonResponse({'Status': False,
@@ -79,7 +72,7 @@ class ConfirmUser(APIView):
                 token.delete()
                 return JsonResponse({'Status': True})
             else:
-                return JsonResponse({'Status': False, 'Errors': 'The token or email is incorrectly specified'})
+                return JsonResponse({'Status': False, 'Errors': 'Неправильно указан токен или email'})
 
         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
 
@@ -100,7 +93,7 @@ class LoginUser(APIView):
 
                     return JsonResponse({'Status': True, 'Token': token.key})
 
-            return JsonResponse({'Status': False, 'Errors': 'Failed to authorize'}, status=status.HTTP_403_FORBIDDEN)
+            return JsonResponse({'Status': False, 'Errors': 'Ошибка авторизации'}, status=status.HTTP_403_FORBIDDEN)
 
         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'},
                         status=status.HTTP_400_BAD_REQUEST)
@@ -382,7 +375,7 @@ class ContactView(APIView):
                 contact = get_object_or_404(Contact, pk=int(request.data["id"]))
             except ValueError:
                 return JsonResponse(
-                    {'Status': False, 'Error': 'Invalid field type ID.'}, status=status.HTTP_400_BAD_REQUEST)
+                    {'Status': False, 'Error': 'Неверный тип ID.'}, status=status.HTTP_400_BAD_REQUEST)
 
             serializer = ContactSerializer(contact, data=request.data, partial=True)
             if serializer.is_valid():
@@ -438,7 +431,7 @@ class OrderView(APIView):
                         contact_id=request.data['contact'],
                         state='new')
                 except IntegrityError as error:
-                    return JsonResponse({'Status': False, 'Errors': f'The arguments are incorrectly specified {error}'},
+                    return JsonResponse({'Status': False, 'Errors': f'Не указаны все необходимые аргументы {error}'},
                                         status=status.HTTP_400_BAD_REQUEST)
                 else:
                     if is_updated:

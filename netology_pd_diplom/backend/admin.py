@@ -5,24 +5,13 @@ from .models import User, Shop, Category, Product, ProductInfo, Parameter, Produ
     Contact, ConfirmEmailToken
 
 
-class ProductParameterInline(admin.TabularInline):
-    model = ProductParameter
-    extra = 1
-
-
-class ProductInline(admin.TabularInline):
-    model = Product
-    extra = 1
-
-
-class OrderItemInline(admin.TabularInline):
-    model = OrderItem
-    extra = 2
-
-
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
+    """
+    Панель управления пользователями
+    """
     model = User
+
     fieldsets = (
         (None, {'fields': ('email', 'password', 'type')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'company', 'position')}),
@@ -36,19 +25,12 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(Shop)
 class ShopAdmin(admin.ModelAdmin):
-    model = Shop
-    fieldsets = (
-        (None, {'fields': ('name', 'state')}),
-        ('Additional Info', {'fields': ('url', 'user'),
-                             'classes': ('collapse',)}),
-    )
-    list_display = ('name', 'state', 'url')
+    pass
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    model = Category
-    inlines = [ProductInline]
+    pass
 
 
 @admin.register(Product)
@@ -58,14 +40,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(ProductInfo)
 class ProductInfoAdmin(admin.ModelAdmin):
-    model = ProductInfo
-    fieldsets = (
-        (None, {'fields': ('product', 'model', 'external_id', 'quantity')}),
-        ('Prices', {'fields': ('price', 'price_rrc')}),
-    )
-    list_display = ('product', 'external_id', 'price', 'price_rrc', 'quantity')
-    ordering = ('external_id',)
-    inlines = [ProductParameterInline]
+    pass
 
 
 @admin.register(Parameter)
@@ -73,15 +48,14 @@ class ParameterAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(ProductParameter)
+class ProductParameterAdmin(admin.ModelAdmin):
+    pass
+
+
 @admin.register(Order)
-class Order(admin.ModelAdmin):
-    model = Order
-    fields = ('user', 'state', 'contact')
-    list_display = ('user', 'created', 'state')
-    ordering = ('created',)
-    inlines = [
-        OrderItemInline,
-    ]
+class OrderAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(OrderItem)

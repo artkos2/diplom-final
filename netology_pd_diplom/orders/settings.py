@@ -19,15 +19,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '=hs6$#5om031nujz4staql9mbuste=!dc^6)4opsjq!vvjxzj@'
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = '=hs6$#5om031nujz4staql9mbuste=!dc^6)4opsjq!vvjxzj@'
+# SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 
-DEBUG = int(os.environ.get("DEBUG", default=0))
+# DEBUG = int(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'backend.urls'
+ROOT_URLCONF = 'orders.urls'
 
 TEMPLATES = [
     {
@@ -98,7 +98,7 @@ DATABASES = {
 
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            "NAME": os.environ.get("SQL_DATABASE", "postgres"),
+            "NAME": os.environ.get("SQL_DATABASE", "diplom-fin"),
             "USER": os.environ.get("SQL_USER", "postgres"),
             "PASSWORD": os.environ.get("SQL_PASSWORD", "postgres"),
             "HOST": os.environ.get("SQL_HOST", "localhost"),
