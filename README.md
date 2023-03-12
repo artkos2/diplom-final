@@ -20,10 +20,10 @@
 
 ## Инструкция для запуска
 
-+ На хосте должен быть установлен Docker
-+ Сделать клон репозитория
++ На хосте должен быть установлен Docker b Git
++ Сделать клон текущего репозитория
 + Из корневой дирректории запустить сборку и запуск образа `docker-compose up -d --build`
 + После запуска всех приложений применить миграции `docker-compose exec web python3 netology_pd_diplom/manage.py migrate --noinput`
-+ Перезапустить образы `docker-compose down -v` и `docker-compose up -d --build`
++ Перезапустить образы `docker-compose down -v` и `docker-compose up -d`
 
 + Проверить работоспособность по адресу `http://localhost:8000`
