@@ -13,5 +13,11 @@ requests
 virtualenv
 virtualenv-clone
 ujson
-PyYAML
-Redis
+pyyaml
+redis
+pytest
+pytest-django
+model_bakery
+drf_spectacular
+drf_spectacular_sidecar
+social-auth-app-django

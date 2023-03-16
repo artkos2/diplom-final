@@ -42,6 +42,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_rest_passwordreset',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'orders'
 ]
 
@@ -138,6 +144,15 @@ EMAIL_USE_SSL = True
 SERVER_EMAIL = EMAIL_HOST_USER
 
 REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '10000/day',
+    },
+
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 40,
 
@@ -148,13 +163,44 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
 
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
 }
+
+# SPECTACULAR_SETTINGS = {
+#     'TITLE': 'API',
+#     'DESCRIPTION': 'Your project description',
+#     'VERSION': '1.0.0',
+#     'SERVE_INCLUDE_SCHEMA': False,
+#     'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
+#     'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+#     'REDOC_DIST': 'SIDECAR',
+# }
+
 R_HOST = 'redis'
 R_PORT = '6379'
 CELERY_BROKER_URL = 'redis://' + R_HOST + ':' + R_PORT + '/0'
 CELERY_RESULT_BACKEND = 'redis://' + R_HOST + ':' + R_PORT + '/0'
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_USERNAME_REQUIRED = False
+SOCIALACCOUNT_AUTO_SIGNUP = False
+SOCIALACCOUNT_FORMS = {'signup': 'api.forms.UserSignupForm'}
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
